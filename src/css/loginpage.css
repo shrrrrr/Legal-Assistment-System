@@ -1,0 +1,30 @@
+/* loginpage.css */
+.video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Send the video to the background */
+}
+
+.videoTag {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content-container {
+  position: relative;
+  z-index: 1; /* Place content above the video */
+}
+
+.loginnavbar{
+  display: flex;
+  justify-content: space-between;
+  
+  
+  border: 3px ;
+  border-radius: 5px;
+  margin-top: 20px;
+}
