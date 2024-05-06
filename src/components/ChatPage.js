@@ -117,6 +117,19 @@ const fetchAllChats = async () => {
       });
 
       console.log(chatHistoryData);
+
+      for (const id in chatHistoryData) {
+        console.log(id);
+        // Iterate through each message-response pair for the current ID
+        chatHistoryData[id].forEach(pair => {
+          console.log("Message:", pair.message);
+          console.log("Response:", pair.response);
+        });
+      }
+      display_All_Chat(chatHistoryData);
+
+      // i will display_all_chat function by passing chatHistory object
+     
       // Now chatHistoryData contains the mapping between chat IDs and messages
       // You can use this data as needed, such as setting it in state
     }
@@ -130,7 +143,7 @@ const fetchAllChats = async () => {
   const startNewChat = async () => {
     try {
       const newChatData = {
-        "_id": 813197,
+        "_id": 813193,
         "queries": [
           {
             "msg": "test",
@@ -159,6 +172,47 @@ const fetchAllChats = async () => {
       console.error('Error starting new chat:', error);
     }
   };
+
+       const display_All_Chat=(responseData)=>{
+
+        const contentContainer = document.getElementById('content');
+
+        // Iterate through each ID
+        for (const id in responseData) {
+          const idHeader = document.createElement('h2');
+          idHeader.textContent = id;
+          contentContainer.appendChild(idHeader);
+      
+          // Check if responseData[id] is an array
+          if (Array.isArray(responseData[id])) {
+            // Iterate through each message-response pair for the current ID
+            responseData[id].forEach(pair => {
+              const messageParagraph = document.createElement('p');
+              const responseParagraph = document.createElement('p');
+      
+              messageParagraph.classList.add('message');
+              messageParagraph.textContent = "Message: " + pair.message;
+      
+              responseParagraph.textContent = "Response: " + pair.response;
+      
+              contentContainer.appendChild(messageParagraph);
+              contentContainer.appendChild(responseParagraph);
+            });
+          } else {
+            // If responseData[id] is not an array, just display a message
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = "No chats available for ID: " + id;
+            contentContainer.appendChild(errorMessage);
+          }
+        }
+
+       }
+
+       const clear_chat_display=()=>{
+        const contentContainer = document.getElementById('content');
+        contentContainer.innerHTML = ''; // Clear content
+
+       }
 
     const toggleChatHistory = () => {
       setShowChats(!showChats);
@@ -275,58 +329,23 @@ const fetchAllChats = async () => {
     <button className="btn btn-primary mt-2" onClick={sendMessage}>Send</button>
     <button className="btn btn-secondary mt-2" onClick={startNewChat} style={{ marginLeft: '10px' }}>New Chat</button>
     <button className="btn btn-secondary mt-2" onClick={fetchAllChats} style={{ marginLeft: '10px' }}>View All Chats</button>
-    <button className="btn btn-secondary mt-2" onClick={toggleChatHistory} style={{ marginLeft: '10px' }}>View History</button>
-    
+    <button className="btn btn-secondary mt-2" onClick={clear_chat_display} style={{ marginLeft: '10px' }}>Hide all Chats</button>
   </div>
 
  
 </div>
 
 
-{/*
-<div>
-{showChats && (
- <div style={{ maxHeight: '900px', overflowY: 'auto' }}>
- {chatHistory.map((chat, index) => (
-   Array.isArray(chat) ? (
-     // Render chat messages if chat is an array
-     chat.map((message, idx) => (
-      
-       <div key={idx} style={{ backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}>
-        <hr/>
-         Legal Assist : {message}
-       </div>
-     ))
-   ) : (
-     // Handle case where chat is an object (not an array)
-     <div key={index} style={{ backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}>
-       You: {chat.message}
-     </div>
-   )
- ))}
-</div>
- )}
+<div className="container" id="content" style={{
+    backgroundColor: "whitesmoke",
+    color: "black",
+    fontSize: "x-large",
+}}>
+
+
 </div>
 
 
-<div>
-  {showChats && (
-    <div style={{ maxHeight: '900px', overflowY: 'auto' }}>
-      {Object.keys(chatHistory).map((chatId) => (
-        <div key={chatId}>
-          {Array.isArray(chatHistory[chatId]) && chatHistory[chatId].map((message, index) => (
-            <div key={index} style={{ backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}>
-              <div>Legal Assist:</div>
-              <div>Message: {message.message}</div>
-              <div>Response: {message.response}</div>
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  )}
-</div>
-*/}
 
 
 

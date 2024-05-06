@@ -163,7 +163,7 @@ style={{
       AI powered contextual search...
     </p>
     <a href="#" className="btn btn-primary">
-      Go somewhere
+      visit web
     </a>
   </div>
 </div>
